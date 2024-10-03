@@ -5725,11 +5725,13 @@ int wl_android_wifi_off(struct net_device *dev, bool force_off)
 #endif /* BCMSDIO */
 #endif /* BCMSDIO || BCMPCIE */
 		dhd_net_wifi_platform_set_power(dev, FALSE, WIFI_TURNOFF_DELAY);
-#ifdef WBRC
-		wl2wbrc_wlan_off_finished();
-#endif /* WBRC */
 		g_wifi_on = FALSE;
 	}
+#ifdef WBRC
+	if (wifi_on || force_off) {
+		wl2wbrc_wlan_off_finished();
+	}
+#endif /* WBRC */
 	dhd_net_if_unlock(dev);
 
 	return ret;
