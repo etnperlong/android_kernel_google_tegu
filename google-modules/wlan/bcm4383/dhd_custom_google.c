@@ -435,7 +435,6 @@ dhd_wlan_init_mac_addr(void)
 	memcpy(wlan_mac, mac, sizeof(mac));
 	return 0;
 }
-#endif /* GET_CUSTOM_MAC_ENABLE */
 
 #if defined(SUPPORT_MULTIPLE_NVRAM) || defined(SUPPORT_MULTIPLE_CLMBLOB)
 enum {
