@@ -18,7 +18,6 @@ obj-y += bms/
 obj-y += bms/misc/
 obj-y += display/common/gs_drm/
 obj-y += display/common/gs_panel/
-obj-y += display/panels/caimito/
 obj-y += display/panels/tegu/
 obj-y += display/samsung/
 obj-y += fingerprint/fpc/
@@ -31,7 +30,6 @@ obj-y += lwis/
 obj-y += nfc/
 obj-y += power/mitigation/
 obj-y += power/reset/
-obj-y += radio/samsung/s5400/
 obj-y += radio/samsung/s5300/
 obj-y += sensors/hall_sensor/
 obj-y += soc/gs/
@@ -41,7 +39,6 @@ obj-y += touch/synaptics/syna_gtd/
 obj-y += trusty/
 obj-y += uwb/qorvo/qm35/qm35s/
 obj-y += video/gchips/
-obj-y += wlan/bcm4390/
 obj-y += wlan/bcm4383/
 
 # These drivers each have their own unique copy of the gcip driver, which has
