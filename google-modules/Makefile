@@ -94,4 +94,5 @@ quiet_cmd_gen_gcip_defs = GCIP    $@
       cmd_gen_gcip_defs = \
 	$(NM) -g -U -f just-symbols $< | \
 	sed 's/^$2//' | \
+	sed 's/\./_/g' | \
 	$(AWK) '{ printf "\#define %s $2%s\n", $$1, $$1 }' > $@
