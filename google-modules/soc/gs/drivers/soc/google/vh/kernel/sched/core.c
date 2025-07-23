@@ -418,12 +418,12 @@ void rvh_try_to_wake_up_success_pixel_mod(void *data, struct task_struct *p)
 				     p->se.vruntime);
 }
 
-void set_cluster_enabled_cb(int cluster, int enabled)
+void vh_set_cluster_enabled_cb(int cluster, int enabled)
 {
 	pixel_cluster_enabled[cluster] = enabled;
 }
 
-int get_cluster_enabled(int cluster)
+int vh_get_cluster_enabled(int cluster)
 {
 	return pixel_cluster_enabled[cluster];
 }

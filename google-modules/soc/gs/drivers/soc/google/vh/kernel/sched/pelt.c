@@ -8,8 +8,6 @@
 
 #include "sched_priv.h"
 
-#define LOAD_AVG_MAX 47742
-
 /*
  * Approximate:
  *   val * y^n,    where y^32 ~= 0.5 (~1 scheduling period)
@@ -158,7 +156,7 @@ accumulate_sum(u64 delta, struct sched_avg *sa,
  * the period_contrib of cfs_rq when updating the sched_avg of a sched_entity
  * if it's more convenient.
  */
-void
+static void
 ___update_load_avg(struct sched_avg *sa, unsigned long load)
 {
 	u32 divider = get_pelt_divider(sa);

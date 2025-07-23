@@ -21,7 +21,7 @@ extern int sched_cpu_idle(int cpu);
 extern int ___update_load_sum(u64 now, struct sched_avg *sa, unsigned long load,
 			      unsigned long runnable, int running);
 extern void ___update_load_avg(struct sched_avg *sa, unsigned long load);
-extern int get_cluster_enabled(int cluster);
+extern int vh_get_cluster_enabled(int cluster);
 
 extern struct cpumask cpu_skip_mask_rt;
 
@@ -187,7 +187,7 @@ static int find_least_loaded_cpu(struct task_struct *p, struct cpumask *lowest_m
 						  rq_util_min, rq_util_max, cpu);
 
 		// Make cpus in CPD state the least preferred
-		if (is_idle && !get_cluster_enabled(pixel_cpu_to_cluster[cpu])) {
+		if (is_idle && !vh_get_cluster_enabled(pixel_cpu_to_cluster[cpu])) {
 			cpu_importance[cpu] = UINT_MAX;
 			exit_lat[cpu] = pixel_cpd_exit_latency[pixel_cpu_to_cluster[cpu]];
 		}

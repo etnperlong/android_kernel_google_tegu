@@ -117,7 +117,7 @@ extern void rvh_util_fits_cpu_pixel_mod(void *data, unsigned long util, unsigned
 extern void rvh_try_to_wake_up_success_pixel_mod(void *data, struct task_struct *task);
 
 extern int pmu_poll_init(void);
-extern void set_cluster_enabled_cb(int cluster, int enabled);
+extern void vh_set_cluster_enabled_cb(int cluster, int enabled);
 extern void register_set_cluster_enabled_cb(void (*func)(int, int));
 extern void vh_sched_resume_end(void *data, void *unused);
 extern void vh_set_task_comm_pixel_mod(void *data, struct task_struct *p);
@@ -283,7 +283,7 @@ static int init_pixel_cpu(void)
 
 	pixel_cpu_init = true;
 
-	register_set_cluster_enabled_cb(set_cluster_enabled_cb);
+	register_set_cluster_enabled_cb(vh_set_cluster_enabled_cb);
 
 	return 0;
 
