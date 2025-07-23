@@ -1,7 +1,7 @@
 ## SPDX-License-Identifier: GPL-2.0-only
 EXTRA_CFLAGS   += -I$(KERNEL_SRC)/drivers/android
 
-ccflags-y += -I$(srctree) -I$(srctree)/$(src)
+ccflags-y += -I$(srctree) -I$(srctree)/$(src) -I$(srctree)/drivers/android
 
 # vendor sched module
 obj-$(CONFIG_VH_SCHED) += vh_sched.o
