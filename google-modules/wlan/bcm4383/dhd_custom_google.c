@@ -333,7 +333,15 @@ typedef struct {
     char sku[MAX_HW_INFO_LEN];
 } sku_info_t;
 
-static sku_info_t sku_table[] = {
+#if defined(BCM4383_CHIP_DEF)
+sku_info_t sku_table[] = {
+	{ {"G8HHN"}, {"MMW"} },
+	{ {"G6GPR"}, {"ROW"} },
+	{ {"G576D"}, {"JPN"} },
+	{ {"GKV4X"}, {"NA"} }
+};
+#else
+sku_info_t sku_table[] = {
 	{ {"G9S9B"}, {"MMW"} },
 	{ {"G8V0U"}, {"MMW"} },
 	{ {"GFQM1"}, {"MMW"} },
@@ -342,7 +350,6 @@ static sku_info_t sku_table[] = {
 	{ {"GQML3"}, {"MMW"} },
 	{ {"GKWS6"}, {"MMW"} },
 	{ {"G1MNW"}, {"MMW"} },
-	{ {"G8HHN"}, {"MMW"} },
 	{ {"GB7N6"}, {"ROW"} },
 	{ {"GLU0G"}, {"ROW"} },
 	{ {"GNA8F"}, {"ROW"} },
@@ -351,7 +358,6 @@ static sku_info_t sku_table[] = {
 	{ {"GVU6C"}, {"ROW"} },
 	{ {"GPJ41"}, {"ROW"} },
 	{ {"GC3VE"}, {"ROW"} },
-	{ {"G6GPR"}, {"ROW"} },
 	{ {"GR1YH"}, {"JPN"} },
 	{ {"GF5KQ"}, {"JPN"} },
 	{ {"GPQ72"}, {"JPN"} },
@@ -360,11 +366,10 @@ static sku_info_t sku_table[] = {
 	{ {"G03Z5"}, {"JPN"} },
 	{ {"GE9DP"}, {"JPN"} },
 	{ {"GZPF0"}, {"JPN"} },
-	{ {"G576D"}, {"JPN"} },
 	{ {"G1AZG"}, {"EU"} },
-	{ {"G9BQD"}, {"NA"} },
-	{ {"GKV4X"}, {"NA"} }
+	{ {"G9BQD"}, {"NA"} }
 };
+#endif /* BCM4383_CHIP_DEF */
 
 static int
 dhd_wlan_get_mac_addr(unsigned char *buf)
@@ -457,10 +462,10 @@ enum {
 #define HW_MAJOR  "major"
 #define HW_MINOR  "minor"
 
-#define DEFAULT_VAL "NA"
+#define DEFAULT_VAL "DEFAULT"
 
-static char val_revision[MAX_HW_INFO_LEN] = DEFAULT_VAL;
-static char val_sku[MAX_HW_INFO_LEN] = DEFAULT_VAL;
+char val_revision[MAX_HW_INFO_LEN] = DEFAULT_VAL;
+char val_sku[MAX_HW_INFO_LEN] = DEFAULT_VAL;
 
 enum hw_stage_attr {
 	DEV = 1,
@@ -475,7 +480,7 @@ typedef struct platform_hw_info {
 	uint8 avail_bmap;
 	char ext_name[MAX_FILE_COUNT][MAX_HW_EXT_LEN];
 } platform_hw_info_t;
-static platform_hw_info_t platform_hw_info;
+platform_hw_info_t platform_hw_info;
 
 static void
 dhd_set_platform_ext_name(char *hw_rev, char* hw_sku)
