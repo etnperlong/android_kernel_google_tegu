@@ -1631,7 +1631,6 @@ dhd_dump_bus_ds_trace(dhd_bus_t *bus, struct bcmstrbuf *strbuf)
 void
 dhd_dump_ds_trace_console(dhd_pub_t *dhdp)
 {
-#ifdef DHD_LOG_DUMP
 	struct bcmstrbuf b;
 	struct bcmstrbuf *strbuf = &b;
 
@@ -1640,7 +1639,6 @@ dhd_dump_ds_trace_console(dhd_pub_t *dhdp)
 	bcm_bprintf_bypass = TRUE;
 	dhd_dump_bus_ds_trace(dhdp->bus, strbuf);
 	bcm_bprintf_bypass = FALSE;
-#endif
 }
 
 void
