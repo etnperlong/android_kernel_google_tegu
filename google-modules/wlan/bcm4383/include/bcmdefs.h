@@ -100,7 +100,7 @@
 #define GCC_DIAGNOSTIC_POP()
 #endif   /* Diagnostic macros not defined */
 
-#if (defined(__GNUC__) && defined(STRICT_GCC_WARNINGS) && \
+#if (defined(__GNUC__) && \
 	(__GNUC__ > 8 || (__GNUC__ == 8 && __GNUC_MINOR__ >= 1)) || \
 	defined(__clang__))
 
