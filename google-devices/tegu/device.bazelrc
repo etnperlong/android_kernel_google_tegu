@@ -2,5 +2,5 @@
 #
 # Copyright (C) 2023 Google LLC
 
-build:tegu --//private/devices/google/common:kernel=//private/devices/google/tegu:kernel
-build:tegu --//private/google-modules/soc/gs:gs_soc_module=//private/devices/google/tegu:zumapro_soc.tegu
+build:tegu --config=zumapro_base
+build:tegu --//private/devices/google/common:kernel=//private/devices/google/tegu:tegu/kernel
