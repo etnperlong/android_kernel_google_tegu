@@ -16140,6 +16140,57 @@ static s32 wl_get_assoc_ies(struct bcm_cfg80211 *cfg, struct net_device *ndev)
 	return err;
 }
 
+s32 wl_validate_bss_length(uint32 version, uint32 tot_len, uint32 ie_length)
+{
+	s32 err = BCME_OK;
+	uint32 len = 0;
+	uint32 diff_len = 0;
+
+	if (tot_len > WL_BSS_INFO_MAX) {
+		WL_ERR(("Currnet length(%d) greater than MAX.\n", tot_len));
+		return BCME_BADLEN;
+	}
+
+	if (ie_length) {
+		len = ROUNDUP(ie_length, 4);
+	}
+
+	switch (version) {
+	case 109:
+		diff_len = ((tot_len > len) ? tot_len - len : len - tot_len);
+		if (diff_len == sizeof(wl_bss_info_v109_t)) {
+			len += sizeof(wl_bss_info_v109_t);
+		} else if (diff_len == sizeof(wl_bss_info_v109_1_t)) {
+			len += sizeof(wl_bss_info_v109_1_t);
+		} else {
+			len += sizeof(wl_bss_info_v109_2_t);
+		}
+		break;
+	case 112:
+		len += sizeof(wl_bss_info_v112_t);
+		break;
+	case 114:
+		len += sizeof(wl_bss_info_v114_t);
+		break;
+	case 115:
+		len += sizeof(wl_bss_info_v115_t);
+		break;
+	default:
+		/* If the version is not supported,
+		 * a new case need to be added for the struct.
+		 */
+		WL_ERR(("Not supported version [%d]\n", version));
+		err = BCME_VERSION;
+		break;
+	}
+
+	if (tot_len !=  len) {
+		WL_ERR(("Incorrect bss length. tot_len [%d] / len [%d]\n", tot_len, len));
+		err = BCME_BADLEN;
+	}
+	return err;
+}
+
 static s32 wl_update_bss_info(struct bcm_cfg80211 *cfg, struct net_device *ndev,
 	bool update_ssid, u8 *target_bssid)
 {
@@ -16233,6 +16284,16 @@ static s32 wl_update_bss_info(struct bcm_cfg80211 *cfg, struct net_device *ndev,
 			goto update_bss_info_out;
 		}
 		bi = (wl_bss_info_v109_t *)(buf + 4);
+
+		if (bi != NULL) {
+			if (wl_validate_bss_length(bi->version, dtoh32(bi->length),
+					bi->ie_length) != BCME_OK) {
+				WL_ERR(("Invalid bss length\n"));
+				err = BCME_BADLEN;
+				goto update_bss_info_out;
+			}
+		}
+
 		chspec = wl_chspec_driver_to_host(bi->chanspec);
 		WL_INFORM_MEM(("chanspec:0x%x band:0x%x chan:%d\n", chspec, CHSPEC_BAND(chspec),
 			wf_chspec_ctlchan(wl_chspec_driver_to_host(chspec))));
@@ -17730,7 +17791,6 @@ static void wl_init_event_handler(struct bcm_cfg80211 *cfg)
 {
 	bzero(cfg->evt_handler, sizeof(cfg->evt_handler));
 
-	cfg->evt_handler[WLC_E_SCAN_COMPLETE] = wl_notify_scan_status;
 	cfg->evt_handler[WLC_E_AUTH] = wl_notify_connect_status;
 	cfg->evt_handler[WLC_E_ASSOC] = wl_notify_connect_status;
 	cfg->evt_handler[WLC_E_LINK] = wl_notify_connect_status;

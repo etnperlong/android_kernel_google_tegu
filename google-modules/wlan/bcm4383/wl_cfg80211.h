@@ -4026,4 +4026,5 @@ extern wl_mlo_link_t *wl_cfg80211_get_ml_linkinfo_by_linkid(struct bcm_cfg80211 
 extern void wl_cfg80211_get_bss_sta_info(struct bcm_cfg80211 *cfg, struct net_device *dev,
 	struct ether_addr *mac_ea, struct station_info *sinfo);
 #endif /* WL_BSS_STA_INFO */
+extern s32 wl_validate_bss_length(uint32 version, uint32 tot_len, uint32 ie_length);
 #endif /* _wl_cfg80211_h_ */

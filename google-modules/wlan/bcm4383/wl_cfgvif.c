@@ -5789,6 +5789,10 @@ wl_update_mlo_peer_info(struct bcm_cfg80211 *cfg, struct net_device *ndev, const
 				mlo_peer_info.num_links++;
 
 				match_found = true;
+				if (mlo_peer_info.num_links >= MAX_MLO_LINK) {
+					WL_INFORM_MEM(("Reached the count of max mlo link.\n"));
+					break;
+				}
 			}
 		}
 	}

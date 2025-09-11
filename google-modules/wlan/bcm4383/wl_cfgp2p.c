@@ -3001,10 +3001,7 @@ wl_cfgp2p_need_wait_actfrmae(struct bcm_cfg80211 *cfg, void *frame, u32 frame_le
 					P2P_ATTR_STATUS);
 				if (p2p_attr_status && *p2p_attr_status) {
 					cfg->need_wait_afrx = false;
-					CFGP2P_ACTION(("need_wait_afrx not set\n"));
 					return;
-				} else if (p2p_attr_status) {
-					CFGP2P_ACTION(("need_wait_afrx is set\n"));
 				} else if (!p2p_attr_status) {
 					CFGP2P_ACTION(("P2P_ATTR_STATUS not found\n"));
 				}

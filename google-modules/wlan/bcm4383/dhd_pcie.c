@@ -1301,7 +1301,6 @@ int dhdpcie_bus_attach(osl_t *osh, dhd_bus_t **bus_ptr,
 		}
 
 		/* dhd_common_init(osh); */
-
 		dhdpcie_quirks_before_dongle_attach(bus);
 
 		if (dhdpcie_dongle_attach(bus)) {
