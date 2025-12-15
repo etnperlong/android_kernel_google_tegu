@@ -379,6 +379,10 @@
 	autoconf=	[IPV6]
 			See Documentation/networking/ipv6.rst.
 
+	autogroup=	[KNL] Enable or disable scheduler automatic task group
+			creation.
+			Format: <bool>
+
 	show_lapic=	[APIC,X86] Advanced Programmable Interrupt Controller
 			Limit apic dumping. The parameter defines the maximal
 			number of local apics being dumped. Also it is possible
@@ -3713,8 +3717,6 @@
 	noapic		[SMP,APIC] Tells the kernel to not make use of any
 			IOAPICs that may be present in the system.
 
-	noautogroup	Disable scheduler automatic task group creation.
-
 	nocache		[ARM]
 
 	nodsp		[SH] Disable hardware DSP at boot time.
@@ -4850,7 +4852,7 @@
 			overwritten.
 
 	rcutree.kthread_prio= 	 [KNL,BOOT]
-			Set the SCHED_FIFO priority of the RCU per-CPU
+			Set the SCHED_RR priority of the RCU per-CPU
 			kthreads (rcuc/N). This value is also used for
 			the priority of the RCU boost threads (rcub/N)
 			and for the RCU grace-period kthreads (rcu_bh,
