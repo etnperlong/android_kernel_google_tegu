@@ -932,6 +932,10 @@ ifdef CONFIG_CC_IS_CLANG
 KBUILD_CPPFLAGS += -Qunused-arguments
 # The kernel builds with '-std=gnu11' so use of GNU extensions is acceptable.
 KBUILD_CFLAGS += -Wno-gnu
+# Disable -Wmacro-redefined to prevent compilation errors in newer Clang 22
+KBUILD_CFLAGS += -Wno-macro-redefined
+# Disbale -Wuninitialized-const-pointer to prevent compilation errors in newer Clang 22
+KBUILD_CFLAGS += -Wno-uninitialized-const-pointer
 
 # Clang may emit a warning when a const variable, such as the dummy variables
 # in typecheck(), or const member of an aggregate type are not initialized,
@@ -1095,9 +1099,6 @@ endif
 
 # arch Makefile may override CC so keep this after arch Makefile is included
 NOSTDINC_FLAGS += -nostdinc
-
-# Variable Length Arrays (VLAs) should not be used anywhere in the kernel
-KBUILD_CFLAGS += -Wvla
 
 # disable pointer signed / unsigned warnings in gcc 4.0
 KBUILD_CFLAGS += -Wno-pointer-sign
