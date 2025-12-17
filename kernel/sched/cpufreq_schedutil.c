@@ -131,8 +131,9 @@ static bool sugov_update_next_freq(struct sugov_policy *sg_policy, u64 time,
 	 */
 	if (next_freq == sg_policy->next_freq ||
 	    (next_freq < sg_policy->next_freq &&
-	     sugov_should_rate_limit(sg_policy, time)))
+	     sugov_should_rate_limit(sg_policy, time))) {
 		return false;
+	}
 
 must_update:
 	sg_policy->next_freq = next_freq;
@@ -857,7 +858,16 @@ static void sugov_limits(struct cpufreq_policy *policy)
 		mutex_unlock(&sg_policy->work_lock);
 	}
 
-	sg_policy->limits_changed = true;
+	/*
+	 * The limits_changed update below must take place before the updates
+	 * of policy limits in cpufreq_set_policy() or a policy limits update
+	 * might be missed, so use a memory barrier to ensure it.
+	 *
+	 * This pairs with the memory barrier in sugov_should_update_freq().
+	 */
+	smp_wmb();
+
+	WRITE_ONCE(sg_policy->limits_changed, true);
 }
 
 struct cpufreq_governor schedutil_gov = {
